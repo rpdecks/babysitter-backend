@@ -7,4 +7,5 @@ class Employer < ApplicationRecord
     has_many :employer_favorites
     has_many :employer_reviews
     has_many :messages, through: :jobs
+    has_secure_password
 end

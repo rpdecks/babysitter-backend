@@ -11,12 +11,12 @@ Caregiver.destroy_all
 
 puts 'Creating Employers'
 20.times do 
-    Employer.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, gender: Faker::Gender.binary_type, username: Faker::Internet.username, email: Faker::Internet.email, phone: Faker::PhoneNumber.cell_phone, dob: Faker::Date.birthday(min_age: 18, max_age: 65), smoker: Faker::Boolean.boolean, bio: Faker::Lorem.sentence(word_count: 30), address: Faker::Address.street_address, has_pets: Faker::Boolean.boolean, job_count: rand(0-20))
+    Employer.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, gender: Faker::Gender.binary_type, username: Faker::Internet.username, email: Faker::Internet.email, phone: Faker::PhoneNumber.cell_phone, dob: Faker::Date.birthday(min_age: 18, max_age: 65), smoker: Faker::Boolean.boolean, bio: Faker::Lorem.sentence(word_count: 30), address: Faker::Address.street_address, has_pets: Faker::Boolean.boolean, job_count: rand(0-20), password: '123')
 end
 
 puts 'Creating Caregivers'
 20.times do 
-    Caregiver.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, gender: Faker::Gender.binary_type, username: Faker::Internet.username, email: Faker::Internet.email, phone: Faker::PhoneNumber.cell_phone, dob: Faker::Date.birthday(min_age: 18, max_age: 65), smoker: Faker::Boolean.boolean, bio: Faker::Lorem.sentence(word_count: 30), address: Faker::Address.street_address, has_pets: Faker::Boolean.boolean, job_count: rand(0-20), pay_rate: rand(10.00-25.00), first_aid_cert: Faker::Boolean.boolean)
+    Caregiver.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, gender: Faker::Gender.binary_type, username: Faker::Internet.username, email: Faker::Internet.email, phone: Faker::PhoneNumber.cell_phone, dob: Faker::Date.birthday(min_age: 18, max_age: 65), smoker: Faker::Boolean.boolean, bio: Faker::Lorem.sentence(word_count: 30), address: Faker::Address.street_address, has_pets: Faker::Boolean.boolean, job_count: rand(0-20), pay_rate: rand(10.00-25.00), first_aid_cert: Faker::Boolean.boolean, password: '123')
 end
 
 puts 'Creating Jobs'
@@ -60,3 +60,8 @@ puts 'Creating Caregiver Favorites'
 5.times do
     CaregiverFavorite.create(caregiver_id: Caregiver.all.sample.id, employer_id: Employer.all.sample.id)
 end
+
+puts 'creating rob & dave'
+
+rob = Employer.create(first_name: 'rob', last_name: 'p', gender: 'male', username: 'rpdecks', email: 'rob@email.com', phone: 123456789, dob: "1980-09-06", smoker: false, bio: Faker::Lorem.sentence(word_count: 30), address: Faker::Address.street_address, has_pets: Faker::Boolean.boolean, job_count: rand(0-20), password: '123')
+dave = Caregiver.create(first_name: 'dave', last_name: 'p', gender: 'male', username: 'd', email: 'dave@email.com', phone: 123456789, dob: "1980-09-06", smoker: false, bio: Faker::Lorem.sentence(word_count: 30), address: Faker::Address.street_address, has_pets: Faker::Boolean.boolean, job_count: rand(0-20), password: '123')
