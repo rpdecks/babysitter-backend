@@ -3,6 +3,6 @@ class Job < ApplicationRecord
     belongs_to :employer, class_name: 'User'
 
     # Validations
-    :start_time, :end_time, :desc, :total_children, :infants, :toddlers, :school_age, :employer_id, presence: true
+    # validates :start_time, :end_time, :desc, :total_children, :infants, :toddlers, :school_age, :employer_id, presence: true
 
 end

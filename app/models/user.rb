@@ -19,15 +19,15 @@ class User < ApplicationRecord
     has_many :messages
 
     # Validations
-    validates :first_name, :last_name, :gender, :email, :phone, :dob, :smoker, :address, :has_pets, presence: true 
-    validates :dob, presence: true
-    validate :validate_age
+    # validates :first_name, :last_name, :gender, :email, :phone, :dob, :smoker, :address, :has_pets, presence: true 
+    # validates :dob, presence: true
+    # validate :validate_age
     # validates :phone, format: { with: /\d{3}-\d{3}-\d{4}/, message: "bad format" }
 
     private
 
     def validate_age
-        if dob.present? && dob > 18.years.ago.to_d
+        if dob.present? && dob > 18.years.ago.to_i
             errors.add(:birth_date, 'You should be over 18 years old.')
         end
     end

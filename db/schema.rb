@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_24_234233) do
+ActiveRecord::Schema.define(version: 2020_06_25_010112) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 2020_06_24_234233) do
   end
 
   create_table "jobs", force: :cascade do |t|
-    t.string "status"
+    t.string "status", default: "incomplete"
     t.string "location"
     t.datetime "start_time"
     t.datetime "end_time"
@@ -47,8 +47,8 @@ ActiveRecord::Schema.define(version: 2020_06_24_234233) do
     t.integer "toddlers"
     t.integer "school_age"
     t.boolean "smoking"
-    t.boolean "completed"
-    t.boolean "first_aid_cert"
+    t.boolean "completed", default: false
+    t.boolean "first_aid_cert", default: false
     t.integer "caregiver_id"
     t.integer "employer_id"
     t.datetime "created_at", precision: 6, null: false
