@@ -10,95 +10,141 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_24_234233) do
+ActiveRecord::Schema.define(version: 2020_06_25_135949) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "conversations", force: :cascade do |t|
-    t.integer "user_id"
+  create_table "caregiver_favorites", force: :cascade do |t|
+    t.bigint "caregiver_id", null: false
+    t.bigint "employer_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["caregiver_id"], name: "index_caregiver_favorites_on_caregiver_id"
+    t.index ["employer_id"], name: "index_caregiver_favorites_on_employer_id"
+  end
+
+  create_table "caregiver_reviews", force: :cascade do |t|
+    t.bigint "caregiver_id", null: false
+    t.bigint "employer_id", null: false
+    t.integer "rating"
+    t.text "content"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["caregiver_id"], name: "index_caregiver_reviews_on_caregiver_id"
+    t.index ["employer_id"], name: "index_caregiver_reviews_on_employer_id"
+  end
+
+  create_table "caregivers", force: :cascade do |t|
+    t.string "username"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "email"
+    t.string "address"
+    t.date "dob"
+    t.string "gender"
+    t.string "phone"
+    t.boolean "smoker"
+    t.text "bio"
+    t.boolean "has_pets"
+    t.integer "job_count"
+    t.float "pay_rate"
+    t.boolean "first_aid_cert"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "favorites", force: :cascade do |t|
-    t.integer "user_id"
+  create_table "employer_favorites", force: :cascade do |t|
+    t.bigint "employer_id", null: false
+    t.bigint "caregiver_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["caregiver_id"], name: "index_employer_favorites_on_caregiver_id"
+    t.index ["employer_id"], name: "index_employer_favorites_on_employer_id"
+  end
+
+  create_table "employer_reviews", force: :cascade do |t|
+    t.bigint "employer_id", null: false
+    t.bigint "caregiver_id", null: false
+    t.text "content"
+    t.integer "rating"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["caregiver_id"], name: "index_employer_reviews_on_caregiver_id"
+    t.index ["employer_id"], name: "index_employer_reviews_on_employer_id"
+  end
+
+  create_table "employers", force: :cascade do |t|
+    t.string "username"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "email"
+    t.string "address"
+    t.date "dob"
+    t.string "gender"
+    t.string "phone"
+    t.boolean "smoker"
+    t.text "bio"
+    t.boolean "has_pets"
+    t.integer "job_count"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "job_opportunities", force: :cascade do |t|
     t.bigint "job_id", null: false
-    t.integer "employer_id"
-    t.integer "caregiver_id"
+    t.bigint "employer_id", null: false
+    t.bigint "caregiver_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["caregiver_id"], name: "index_job_opportunities_on_caregiver_id"
+    t.index ["employer_id"], name: "index_job_opportunities_on_employer_id"
     t.index ["job_id"], name: "index_job_opportunities_on_job_id"
   end
 
   create_table "jobs", force: :cascade do |t|
+    t.bigint "caregiver_id", null: false
+    t.bigint "employer_id", null: false
     t.string "status"
     t.string "location"
     t.datetime "start_time"
     t.datetime "end_time"
     t.text "desc"
-    t.integer "total_children"
-    t.integer "infants"
-    t.integer "toddlers"
-    t.integer "school_age"
-    t.boolean "smoking"
+    t.integer "total_child_count"
+    t.integer "infant_count"
+    t.integer "toddler_count"
+    t.integer "school_age_count"
     t.boolean "completed"
+    t.float "pay_rate"
+    t.boolean "smoker"
     t.boolean "first_aid_cert"
-    t.integer "caregiver_id"
-    t.integer "employer_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["caregiver_id"], name: "index_jobs_on_caregiver_id"
+    t.index ["employer_id"], name: "index_jobs_on_employer_id"
   end
 
   create_table "messages", force: :cascade do |t|
+    t.bigint "job_id", null: false
     t.text "content"
     t.boolean "read"
-    t.bigint "conversation_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "user_id"
-    t.index ["conversation_id"], name: "index_messages_on_conversation_id"
+    t.index ["job_id"], name: "index_messages_on_job_id"
   end
 
-  create_table "participants", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "conversation_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "reviews", force: :cascade do |t|
-    t.integer "rating"
-    t.text "content"
-    t.integer "reviewer_id"
-    t.integer "reviewed_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "users", force: :cascade do |t|
-    t.string "first_name"
-    t.string "last_name"
-    t.string "gender"
-    t.string "username"
-    t.string "email"
-    t.string "phone"
-    t.date "dob"
-    t.boolean "smoker"
-    t.boolean "first_aid_cert"
-    t.text "bio"
-    t.float "pay_rate"
-    t.string "address"
-    t.boolean "has_pets"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
+  add_foreign_key "caregiver_favorites", "caregivers"
+  add_foreign_key "caregiver_favorites", "employers"
+  add_foreign_key "caregiver_reviews", "caregivers"
+  add_foreign_key "caregiver_reviews", "employers"
+  add_foreign_key "employer_favorites", "caregivers"
+  add_foreign_key "employer_favorites", "employers"
+  add_foreign_key "employer_reviews", "caregivers"
+  add_foreign_key "employer_reviews", "employers"
+  add_foreign_key "job_opportunities", "caregivers"
+  add_foreign_key "job_opportunities", "employers"
   add_foreign_key "job_opportunities", "jobs"
-  add_foreign_key "messages", "conversations"
+  add_foreign_key "jobs", "caregivers"
+  add_foreign_key "jobs", "employers"
+  add_foreign_key "messages", "jobs"
 end
