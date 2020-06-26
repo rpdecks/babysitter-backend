@@ -1,4 +1,4 @@
-class Api::V1::Caregivers::CaregiversSessionsController < ApplicationController
+class Api::V1::CaregiversSessionsController < ApplicationController
 
   def create
     @caregiver = Caregiver.find_by(email: session_params[:email])
@@ -21,7 +21,7 @@ class Api::V1::Caregivers::CaregiversSessionsController < ApplicationController
   private
 
   def session_params
-    params.require(:employer).permit(:email,:password)
+    params.require(:caregiver).permit(:email,:password)
   end
 
 end 

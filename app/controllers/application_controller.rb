@@ -13,7 +13,7 @@ class ApplicationController < ActionController::API
     def current_caregiver
       token = request.headers['Auth-Token']
       begin
-        caregiver_id = JWT.decode(token, ENV['SUPER_SECRET_KEY'])[0]['employer_id']
+        caregiver_id = JWT.decode(token, ENV['SUPER_SECRET_KEY'])[0]['caregiver_id']
         return Caregiver.find_by(id: caregiver_id)
       rescue
         nil
