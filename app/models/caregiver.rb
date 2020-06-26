@@ -7,4 +7,5 @@ class Caregiver < ApplicationRecord
     has_many :caregiver_favorites
     has_many :caregiver_reviews
     has_many :messages, through: :jobs
+    has_secure_password
 end

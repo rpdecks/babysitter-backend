@@ -1,0 +1,1 @@
+caregiver_id, employer_id, status, location, start_time, end_time, desc, total_child_count, infant_count, toddler_count, school_age_count, completed, pay_rate, smoker, first_aid_cert
