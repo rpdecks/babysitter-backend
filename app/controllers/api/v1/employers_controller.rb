@@ -2,7 +2,6 @@ class Api::V1::EmployersController < ApplicationController
     before_action :authenticate_employer, only: [:get_info]
 
     def create
-      byebug
       @employer = Employer.create(employer_params)
       token = JWT.encode({ employer_id: @employer.id }, ENV['SUPER_SECRET_KEY'])
       render :json => { token: token }, :status => :ok
@@ -19,7 +18,7 @@ class Api::V1::EmployersController < ApplicationController
     private
 
     def employer_params
-      params.require(:employer).permit(:first_name, :last_name, :dob, :gender, :phone, :smoker, :has_pets, :bio, :email, :password, :user_type, :address, :first_aid_cert, :pay_rate)
+      params.require(:employer).permit(:first_name, :last_name, :dob, :gender, :phone, :smoker, :has_pets, :bio, :email, :password, :user_type, :address)
     end
   
     def find_employer
