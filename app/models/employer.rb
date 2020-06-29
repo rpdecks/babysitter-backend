@@ -1,6 +1,6 @@
 class Employer < ApplicationRecord
     has_many :jobs
-    has_many :job_opportunites
+    has_many :candidates
     has_many :caregivers, through: :jobs
     has_many :caregiver_reviews, through: :caregivers
     has_many :caregiver_favorites, through: :caregivers
