@@ -5,6 +5,7 @@ CaregiverFavorite.destroy_all
 EmployerFavorite.destroy_all
 CaregiverReview.destroy_all
 EmployerReview.destroy_all
+Candidate.destroy_all
 Job.destroy_all
 Employer.destroy_all
 Caregiver.destroy_all
@@ -20,7 +21,7 @@ puts 'Creating Caregivers'
 end
 
 puts 'Creating Jobs'
-20.times do
+120.times do
     # to ensure jobs are 1-8 hours long max/min
     time = Faker::Time.between_dates(from: Date.today, to: Date.today + 30, period: :day)
     finish = time + (rand(1-8)).hours
@@ -31,6 +32,24 @@ puts 'Creating Jobs'
     total = infants + toddlers + school_age
 
     Job.create(employer_id: Employer.all.sample.id, caregiver_id: Caregiver.all.sample.id, start_time: time, end_time: finish, desc: Faker::Lorem.sentence(word_count: 30), location: Faker::Address.street_address, total_child_count: total, infant_count: infants, toddler_count: toddlers, school_age_count: school_age, smoker: Faker::Boolean.boolean, first_aid_cert: Faker::Boolean.boolean)
+end
+
+puts 'Creating Jobs w/o caregivers assigned'
+120.times do
+    # to ensure jobs are 1-8 hours long max/min
+    time = Faker::Time.between_dates(from: Date.today, to: Date.today + 30, period: :day)
+    finish = time + (rand(1-8)).hours
+
+    infants =  [0,1].sample
+    toddlers = [0,1,2].sample
+    school_age = [0,1,2,3].sample 
+    total = infants + toddlers + school_age
+
+    job = Job.create(employer_id: Employer.all.sample.id, start_time: time, end_time: finish, desc: Faker::Lorem.sentence(word_count: 30), location: Faker::Address.street_address, total_child_count: total, infant_count: infants, toddler_count: toddlers, school_age_count: school_age, smoker: Faker::Boolean.boolean, first_aid_cert: Faker::Boolean.boolean, )
+
+    5.times do 
+        Candidate.create(job_id: job.id, caregiver_id: Caregiver.all.sample.id)
+    end
 end
 
 puts 'Creating Caregiver Reviews'
@@ -60,8 +79,3 @@ puts 'Creating Caregiver Favorites'
 5.times do
     CaregiverFavorite.create(caregiver_id: Caregiver.all.sample.id, employer_id: Employer.all.sample.id)
 end
-
-puts 'creating rob & dave'
-
-rob = Employer.create(first_name: 'rob', last_name: 'p', gender: 'male', username: 'rpdecks', email: 'rob@email.com', phone: 123456789, dob: "1980-09-06", smoker: false, bio: Faker::Lorem.sentence(word_count: 30), address: Faker::Address.street_address, has_pets: Faker::Boolean.boolean, job_count: rand(0-20), password: '123')
-dave = Caregiver.create(first_name: 'dave', last_name: 'p', gender: 'male', username: 'd', email: 'dave@email.com', phone: 123456789, dob: "1980-09-06", smoker: false, bio: Faker::Lorem.sentence(word_count: 30), address: Faker::Address.street_address, has_pets: Faker::Boolean.boolean, job_count: rand(0-20), password: '123')

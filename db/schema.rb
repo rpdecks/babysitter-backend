@@ -10,10 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_25_180021) do
+ActiveRecord::Schema.define(version: 2020_06_29_013943) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "candidates", force: :cascade do |t|
+    t.bigint "job_id", null: false
+    t.bigint "caregiver_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["caregiver_id"], name: "index_candidates_on_caregiver_id"
+    t.index ["job_id"], name: "index_candidates_on_job_id"
+  end
 
   create_table "caregiver_favorites", force: :cascade do |t|
     t.bigint "caregiver_id", null: false
@@ -36,7 +45,6 @@ ActiveRecord::Schema.define(version: 2020_06_25_180021) do
   end
 
   create_table "caregivers", force: :cascade do |t|
-    t.string "username"
     t.string "first_name"
     t.string "last_name"
     t.string "email"
@@ -76,7 +84,6 @@ ActiveRecord::Schema.define(version: 2020_06_25_180021) do
   end
 
   create_table "employers", force: :cascade do |t|
-    t.string "username"
     t.string "first_name"
     t.string "last_name"
     t.string "email"
@@ -91,17 +98,6 @@ ActiveRecord::Schema.define(version: 2020_06_25_180021) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "password_digest"
-  end
-
-  create_table "job_opportunities", force: :cascade do |t|
-    t.bigint "job_id", null: false
-    t.bigint "employer_id", null: false
-    t.bigint "caregiver_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["caregiver_id"], name: "index_job_opportunities_on_caregiver_id"
-    t.index ["employer_id"], name: "index_job_opportunities_on_employer_id"
-    t.index ["job_id"], name: "index_job_opportunities_on_job_id"
   end
 
   create_table "jobs", force: :cascade do |t|
@@ -135,6 +131,8 @@ ActiveRecord::Schema.define(version: 2020_06_25_180021) do
     t.index ["job_id"], name: "index_messages_on_job_id"
   end
 
+  add_foreign_key "candidates", "caregivers"
+  add_foreign_key "candidates", "jobs"
   add_foreign_key "caregiver_favorites", "caregivers"
   add_foreign_key "caregiver_favorites", "employers"
   add_foreign_key "caregiver_reviews", "caregivers"
@@ -143,9 +141,6 @@ ActiveRecord::Schema.define(version: 2020_06_25_180021) do
   add_foreign_key "employer_favorites", "employers"
   add_foreign_key "employer_reviews", "caregivers"
   add_foreign_key "employer_reviews", "employers"
-  add_foreign_key "job_opportunities", "caregivers"
-  add_foreign_key "job_opportunities", "employers"
-  add_foreign_key "job_opportunities", "jobs"
   add_foreign_key "jobs", "caregivers"
   add_foreign_key "jobs", "employers"
   add_foreign_key "messages", "jobs"

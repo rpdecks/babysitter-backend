@@ -8,4 +8,6 @@ class Employer < ApplicationRecord
     has_many :employer_reviews
     has_many :messages, through: :jobs
     has_secure_password
+
+    validates :email, uniqueness: true
 end
