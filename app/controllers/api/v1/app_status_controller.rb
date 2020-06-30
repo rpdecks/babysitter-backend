@@ -13,17 +13,15 @@ class Api::V1::AppStatusController < ApplicationController
                 caregiver_reviews: @employer.caregiver_reviews.as_json
             }
         elsif current_caregiver
-            # render json: current_caregiver
-            # {
-                # jobs: @jobs.as_json,
-                # candidates: @candidates.as_json,
-                # employers: @employers.as_json,
-                # caregivers: @caregivers.as_json,
-                # employer_reviews: @employer_reviews.as_json,
-                # employer_favorites: @employer_favorites.as_json,
-                # caregiver_reviews: @caregiver_reviews.as_json,
-                # caregiver_favorites: @caregiver_favorites.as_json,
-            # }
+            @caregiver = current_caregiver
+            render json: {
+                user: @caregiver.as_json,
+                jobs: @caregiver.jobs.as_json( :include => [:candidates] ),
+                employers: @caregiver.employers.as_json,
+                caregiver_reviews: @caregiver.caregiver_reviews.as_json,
+                caregiver_favorites: @caregiver.caregiver_favorites.as_json,
+                employer_reviews: @caregiver.employer_reviews.as_json
+            }
         end
     end
 
