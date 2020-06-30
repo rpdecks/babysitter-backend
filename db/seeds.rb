@@ -30,8 +30,9 @@ puts 'Creating Jobs'
     toddlers = [0,1,2].sample
     school_age = [0,1,2,3].sample 
     total = infants + toddlers + school_age
+    job_title = ['Babysitting job', 'Date night', 'Company retreat', 'Nanny job', 'Anniversary date'].sample
 
-    Job.create(employer_id: Employer.all.sample.id, caregiver_id: Caregiver.all.sample.id, start_time: time, end_time: finish, desc: Faker::Lorem.sentence(word_count: 30), location: Faker::Address.street_address, total_child_count: total, infant_count: infants, toddler_count: toddlers, school_age_count: school_age, smoker: Faker::Boolean.boolean, first_aid_cert: Faker::Boolean.boolean, status: ['complete', 'incomplete'].sample, pay_rate: rand(10.5-20))
+    Job.create(employer_id: Employer.all.sample.id, caregiver_id: Caregiver.all.sample.id, start_time: time, end_time: finish, desc: Faker::Lorem.sentence(word_count: 30), location: Faker::Address.street_address, total_child_count: total, infant_count: infants, toddler_count: toddlers, school_age_count: school_age, smoker: Faker::Boolean.boolean, first_aid_cert: Faker::Boolean.boolean, status: ['complete', 'incomplete'].sample, pay_rate: rand(10.5-20), title: job_title)
 end
 
 puts 'Creating Jobs w/o caregivers assigned'
