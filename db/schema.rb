@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_29_013943) do
+ActiveRecord::Schema.define(version: 2020_06_29_173011) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -101,9 +101,8 @@ ActiveRecord::Schema.define(version: 2020_06_29_013943) do
   end
 
   create_table "jobs", force: :cascade do |t|
-    t.bigint "caregiver_id", null: false
     t.bigint "employer_id", null: false
-    t.string "status"
+    t.string "status", default: "incomplete"
     t.string "location"
     t.datetime "start_time"
     t.datetime "end_time"
@@ -112,13 +111,14 @@ ActiveRecord::Schema.define(version: 2020_06_29_013943) do
     t.integer "infant_count"
     t.integer "toddler_count"
     t.integer "school_age_count"
-    t.boolean "completed"
+    t.boolean "completed", default: false
     t.float "pay_rate"
     t.boolean "smoker"
     t.boolean "first_aid_cert"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["caregiver_id"], name: "index_jobs_on_caregiver_id"
+    t.integer "caregiver_id"
+    t.text "title"
     t.index ["employer_id"], name: "index_jobs_on_employer_id"
   end
 
@@ -141,7 +141,6 @@ ActiveRecord::Schema.define(version: 2020_06_29_013943) do
   add_foreign_key "employer_favorites", "employers"
   add_foreign_key "employer_reviews", "caregivers"
   add_foreign_key "employer_reviews", "employers"
-  add_foreign_key "jobs", "caregivers"
   add_foreign_key "jobs", "employers"
   add_foreign_key "messages", "jobs"
 end
