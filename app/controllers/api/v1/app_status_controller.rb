@@ -7,7 +7,7 @@ class Api::V1::AppStatusController < ApplicationController
             @employer = current_employer
             render json: {
                 user: @employer.as_json,
-                userJobs: @employer.jobs.as_json( :include => [:candidates] ),
+                jobs: @employer.jobs.as_json(:include => :candidates, :methods => :duration),
                 caregivers: @employer.caregivers.as_json,
                 employer_reviews: @employer.employer_reviews.as_json,
                 employer_favorites: @employer.employer_favorites.as_json,
