@@ -14,4 +14,21 @@ class Job < ApplicationRecord
     hours = diff_in_seconds.to_f / 3600
     return hours.to_f
   end
+
+  def start_time_HHMM  
+    self.start_time.strftime("%I:%M %p")
+  end
+
+  def end_time_HHMM  
+    self.end_time.strftime("%I:%M %p")
+  end 
+
+  def start_date_MMDDYY
+    self.start_time.strftime("%m-%d-%y")
+  end
+
+  def end_date_MMDDYY
+    self.end_time.strftime("%m-%d-%y")
+  end
+
 end

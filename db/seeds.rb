@@ -23,10 +23,8 @@ end
 puts 'Creating Jobs'
 120.times do
     # to ensure jobs are 1-8 hours long max/min
-    starting_date = Faker::Date.between(from: Date.today, to: Date.today + 30)
-    starting_time = rand(8-22)
-    ending_date = starting_date 
-    ending_time = starting_time + [2, 4, 6, 8].sample
+    start = Faker::Time.between_dates(from: Date.today - 1, to: Date.today, period: :day) 
+    ending = start + [7200, 14400, 21600, 28800].sample
 
     infants =  [0,1].sample
     toddlers = [0,1,2].sample
@@ -34,23 +32,22 @@ puts 'Creating Jobs'
     total = infants + toddlers + school_age
     job_title = ['Babysitting job', 'Date night', 'Company retreat', 'Nanny job', 'Anniversary date'].sample
 
-    Job.create(employer_id: Employer.all.sample.id, caregiver_id: Caregiver.all.sample.id, start_time: starting_time, end_time: ending_time, start_date: starting_date, end_date: ending_date, desc: Faker::Lorem.sentence(word_count: 30), location: Faker::Address.street_address, total_child_count: total, infant_count: infants, toddler_count: toddlers, school_age_count: school_age, smoker: Faker::Boolean.boolean, first_aid_cert: Faker::Boolean.boolean, status: ['complete', 'incomplete'].sample, pay_rate: rand(10.5-20), title: job_title)
+    Job.create(employer_id: Employer.all.sample.id, caregiver_id: Caregiver.all.sample.id, start_time: start, end_time: ending, desc: Faker::Lorem.sentence(word_count: 30), location: Faker::Address.street_address, total_child_count: total, infant_count: infants, toddler_count: toddlers, school_age_count: school_age, non_smoking: Faker::Boolean.boolean, first_aid_cert: Faker::Boolean.boolean, has_pets: Faker::Boolean.boolean, status: ['complete', 'incomplete'].sample, pay_rate: rand(10.5-20), title: job_title)
 end
 
 puts 'Creating Jobs w/o caregivers assigned'
 120.times do
     # to ensure jobs are 1-8 hours long max/min
-    starting_date = Faker::Date.between(from: Date.today, to: Date.today + 30)
-    starting_time = rand(8-22)
-    ending_date = starting_date 
-    ending_time = starting_time + [2, 4, 6, 8].sample
+    start = Faker::Time.between_dates(from: Date.today - 1, to: Date.today, period: :day) 
+    ending = start + [7200, 14400, 21600, 28800].sample
 
     infants =  [0,1].sample
     toddlers = [0,1,2].sample
     school_age = [0,1,2,3].sample 
     total = infants + toddlers + school_age
+    job_title = ['Babysitting job', 'Date night', 'Company retreat', 'Nanny job', 'Anniversary date', 'No good reason'].sample
 
-    job = Job.create(employer_id: Employer.all.sample.id, start_time: starting_time, end_time: ending_time, start_date: starting_date, end_date: ending_date, desc: Faker::Lorem.sentence(word_count: 30), location: Faker::Address.street_address, total_child_count: total, infant_count: infants, toddler_count: toddlers, school_age_count: school_age, smoker: Faker::Boolean.boolean, first_aid_cert: Faker::Boolean.boolean, )
+    job = Job.create(employer_id: Employer.all.sample.id, start_time: start, end_time: ending, desc: Faker::Lorem.sentence(word_count: 30), location: Faker::Address.street_address, total_child_count: total, infant_count: infants, toddler_count: toddlers, school_age_count: school_age, non_smoking: Faker::Boolean.boolean, first_aid_cert: Faker::Boolean.boolean, has_pets: Faker::Boolean.boolean, title: job_title, pay_rate: rand(10.00-25.00))
 
     5.times do 
         Candidate.create(job_id: job.id, caregiver_id: Caregiver.all.sample.id)
