@@ -11,7 +11,7 @@ class Api::V1::CandidatesController < ApplicationController
             else
                 @candidate = Candidate.new(candidate_params)
                 @candidate.caregiver_id = current_caregiver.id
-                if @candidate.persisted?
+                if @candidate.save
                     render :json => { created: true, job_id: candidate_params[:job_id] }, :status => :ok
                 end
             end
