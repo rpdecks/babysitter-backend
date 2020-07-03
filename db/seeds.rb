@@ -17,7 +17,7 @@ end
 
 puts 'Creating Caregivers'
 20.times do 
-    Caregiver.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, gender: Faker::Gender.binary_type, email: Faker::Internet.email, phone: Faker::PhoneNumber.cell_phone, dob: Faker::Date.birthday(min_age: 18, max_age: 65), smoker: Faker::Boolean.boolean, bio: Faker::Lorem.sentence(word_count: 30), address: Faker::Address.street_address, has_pets: Faker::Boolean.boolean, job_count: rand(0-20), pay_rate: rand(10.00-25.00), first_aid_cert: Faker::Boolean.boolean, password: '123')
+    Caregiver.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, gender: Faker::Gender.binary_type, email: Faker::Internet.email, phone: Faker::PhoneNumber.cell_phone, dob: Faker::Date.birthday(min_age: 18, max_age: 65), smoker: Faker::Boolean.boolean, bio: Faker::Lorem.sentence(word_count: 30), address: Faker::Address.street_address, has_pets: Faker::Boolean.boolean, job_count: rand(0-20), pay_rate: rand(10..25), first_aid_cert: Faker::Boolean.boolean, password: '123')
 end
 
 puts 'Creating Jobs'
@@ -32,7 +32,7 @@ puts 'Creating Jobs'
     total = infants + toddlers + school_age
     job_title = ['Babysitting job', 'Date night', 'Company retreat', 'Nanny job', 'Anniversary date'].sample
 
-    Job.create(employer_id: Employer.all.sample.id, caregiver_id: Caregiver.all.sample.id, start_time: start, end_time: ending, desc: Faker::Lorem.sentence(word_count: 30), location: Faker::Address.street_address, total_child_count: total, infant_count: infants, toddler_count: toddlers, school_age_count: school_age, non_smoking: Faker::Boolean.boolean, first_aid_cert: Faker::Boolean.boolean, has_pets: Faker::Boolean.boolean, status: ['complete', 'incomplete'].sample, pay_rate: rand(10.5-20), title: job_title)
+    Job.create(employer_id: Employer.all.sample.id, caregiver_id: Caregiver.all.sample.id, start_time: start, end_time: ending, desc: Faker::Lorem.sentence(word_count: 30), job_location: Faker::Address.street_address, total_child_count: total, infant_count: infants, toddler_count: toddlers, school_age_count: school_age, non_smoking: Faker::Boolean.boolean, first_aid_cert: Faker::Boolean.boolean, has_pets: Faker::Boolean.boolean, status: ['complete', 'incomplete'].sample, pay_rate: rand(10..20), title: job_title)
 end
 
 puts 'Creating Jobs w/o caregivers assigned'
@@ -47,7 +47,7 @@ puts 'Creating Jobs w/o caregivers assigned'
     total = infants + toddlers + school_age
     job_title = ['Babysitting job', 'Date night', 'Company retreat', 'Nanny job', 'Anniversary date', 'No good reason'].sample
 
-    job = Job.create(employer_id: Employer.all.sample.id, start_time: start, end_time: ending, desc: Faker::Lorem.sentence(word_count: 30), location: Faker::Address.street_address, total_child_count: total, infant_count: infants, toddler_count: toddlers, school_age_count: school_age, non_smoking: Faker::Boolean.boolean, first_aid_cert: Faker::Boolean.boolean, has_pets: Faker::Boolean.boolean, title: job_title, pay_rate: rand(10.00-25.00))
+    job = Job.create(employer_id: Employer.all.sample.id, start_time: start, end_time: ending, desc: Faker::Lorem.sentence(word_count: 30), job_location: Faker::Address.street_address, total_child_count: total, infant_count: infants, toddler_count: toddlers, school_age_count: school_age, non_smoking: Faker::Boolean.boolean, first_aid_cert: Faker::Boolean.boolean, has_pets: Faker::Boolean.boolean, title: job_title, pay_rate: rand(10..25))
 
     5.times do 
         Candidate.create(job_id: job.id, caregiver_id: Caregiver.all.sample.id)
