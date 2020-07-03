@@ -28,7 +28,7 @@ class Api::V1::JobsController < ApplicationController
   end
 
   def update
-    if @job.save
+    if @job.update(job_params)
       render :json => @job, :status => :ok
     else
       render :json => { msg: "Job update failed." }, :status => :bad_request
@@ -36,18 +36,17 @@ class Api::V1::JobsController < ApplicationController
   end
 
   def destroy
-    @job.destroy
-    if @job.persisted?
-      render :json => { msg: "Delete failed!"}, :status => :bad_request
+    if @job.destroy
+      render :json => { msg: 'Job was deleted!'}, :status => :ok
     else
-      render :json => { msg: "Job was deleted!"}, :status => :ok
+      render :json => { msg: "Delete failed!"}, :status => :bad_request
     end
   end
 
   private 
 
   def job_params
-    params.require(:job).permit(:title, :location, :start_time, :start_date ,:end_time, :end_date, :desc, :total_child_count, :infant_count, :toddler_count, :school_age_count, :pay_rate, :non_smoking, :first_aid_cert, :has_pets)
+    params.require(:job).permit(:title, :job_location, :start_time, :start_date ,:end_time, :end_date, :desc, :total_child_count, :infant_count, :toddler_count, :school_age_count, :pay_rate, :non_smoking, :first_aid_cert, :has_pets)
   end
 
   def find_job 
