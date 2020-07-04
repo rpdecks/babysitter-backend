@@ -6,7 +6,7 @@ class Api::V1::AppStatusController < ApplicationController
         if current_employer
             @employer = current_employer
             render json: {
-                user: @employer.as_json(:methods => :rating),
+                user: @employer.as_json(:include => :employer_favorites, :methods => :rating),
                 jobs: @employer.jobs.as_json(:methods => [:duration, :start_time_HHMM, :end_time_HHMM, :start_date_YYYYMMDD, :end_date_YYYYMMDD]),
                 caregivers: Caregiver.all.active.as_json(:methods => :rating),
                 employer_reviews: @employer.employer_reviews.as_json,
@@ -16,7 +16,7 @@ class Api::V1::AppStatusController < ApplicationController
         elsif current_caregiver
             @caregiver = current_caregiver
             render json: {
-                user: @caregiver.as_json(:methods => :rating),
+                user: @caregiver.as_json(:include => :caregiver_favorites, :methods => :rating),
                 jobs: @caregiver.jobs.as_json(:include => :candidates, :methods => 
                     [:duration, :start_time_HHMM, :end_time_HHMM, :start_date_YYYYMMDD, 
                     :end_date_YYYYMMDD]),
