@@ -34,12 +34,12 @@ image_urls = [
 
 puts 'Creating Employers'
 20.times do 
-    Employer.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, gender: Faker::Gender.binary_type, email: Faker::Internet.email, phone: Faker::PhoneNumber.cell_phone, dob: Faker::Date.birthday(min_age: 18, max_age: 65), smoker: Faker::Boolean.boolean, bio: Faker::Lorem.sentence(word_count: 30), address: Faker::Address.street_address, has_pets: Faker::Boolean.boolean, job_count: rand(0-20), password: '123', image: image_urls.sample)
+    Employer.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, gender: Faker::Gender.binary_type, email: Faker::Internet.email, phone: Faker::PhoneNumber.cell_phone, dob: Faker::Date.birthday(min_age: 18, max_age: 65), smoker: Faker::Boolean.boolean, bio: Faker::Lorem.sentence(word_count: 30), address: Faker::Address.street_address, has_pets: Faker::Boolean.boolean, password: '123', image: image_urls.sample)
 end
 
 puts 'Creating Caregivers'
 20.times do 
-    Caregiver.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, gender: Faker::Gender.binary_type, email: Faker::Internet.email, phone: Faker::PhoneNumber.cell_phone, dob: Faker::Date.birthday(min_age: 18, max_age: 65), smoker: Faker::Boolean.boolean, bio: Faker::Lorem.sentence(word_count: 30), address: Faker::Address.street_address, has_pets: Faker::Boolean.boolean, job_count: rand(0-20), pay_rate: rand(10..25).to_i, first_aid_cert: Faker::Boolean.boolean, password: '123', image: image_urls.sample)
+    Caregiver.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, gender: Faker::Gender.binary_type, email: Faker::Internet.email, phone: Faker::PhoneNumber.cell_phone, dob: Faker::Date.birthday(min_age: 18, max_age: 65), smoker: Faker::Boolean.boolean, bio: Faker::Lorem.sentence(word_count: 30), address: Faker::Address.street_address, has_pets: Faker::Boolean.boolean, pay_rate: rand(10..25).to_i, first_aid_cert: Faker::Boolean.boolean, password: '123', image: image_urls.sample)
 end
 
 puts 'Creating Jobs'
@@ -82,7 +82,7 @@ puts 'Creating Caregiver Reviews'
     cg = sitters.sample
     emp = cg.employers.sample
     
-    CaregiverReview.create(caregiver_id: cg.id, employer_id: emp.id, rating: rand(1..5), content: Faker::Lorem.sentence(word_count: 30))
+    CaregiverReview.create(caregiver_id: cg.id, employer_id: emp.id, rating: rand(1..5), title: Faker::Lorem.sentence(word_count: 5), content: Faker::Lorem.sentence(word_count: 30))
 end
 
 puts 'Creating Employer Reviews'
@@ -91,7 +91,7 @@ puts 'Creating Employer Reviews'
     emp = employers.sample
     cg = emp.caregivers.sample
 
-    EmployerReview.create(caregiver_id: cg.id, employer_id: emp.id, rating: rand(1..5), content: Faker::Lorem.sentence(word_count: 30))
+    EmployerReview.create(caregiver_id: cg.id, employer_id: emp.id, rating: rand(1..5), title: Faker::Lorem.sentence(word_count: 5), content: Faker::Lorem.sentence(word_count: 30))
 end
 
 puts 'Creating Employer Favorites'
