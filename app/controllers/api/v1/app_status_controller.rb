@@ -22,7 +22,7 @@ class Api::V1::AppStatusController < ApplicationController
                     :end_date_YYYYMMDD]),
                 interested_jobs: @caregiver.candidates.as_json(:only => :job_id),
                 available_jobs: Job.all.available_jobs.as_json(:methods => [:duration, :start_time_HHMM, :end_time_HHMM, :start_date_YYYYMMDD, :end_date_YYYYMMDD]),
-                employers: Employer.all.active.as_json(:include => :caregiver_reviews, :methods => [:job_count, :age]),
+                employers: Employer.all.active.as_json(:include => :caregiver_reviews, :methods => [:rating, :job_count, :age]),
                 caregiver_reviews: @caregiver.caregiver_reviews.as_json,
                 caregiver_favorites: @caregiver.caregiver_favorites.as_json,
                 employer_reviews: @caregiver.employer_reviews.as_json
