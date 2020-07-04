@@ -17,8 +17,12 @@ class Employer < ApplicationRecord
 
     def rating
         ratings = self.caregiver_reviews.map { |review| review.rating }
-        user_rating = ratings.reduce(:+) / ratings.length.to_f
-        return user_rating.round(1)
+        if ratings.length > 0
+            user_rating = ratings.reduce(:+) / ratings.length.to_f
+            return user_rating.round(1)
+        else
+            return user_rating = 0
+        end
     end
 
     def job_count
