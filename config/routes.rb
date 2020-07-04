@@ -4,8 +4,8 @@ Rails.application.routes.draw do
       resources :employers, only: [:index, :show, :create, :update]
       resources :caregivers, only: [:index, :show, :create, :update]
       resources :jobs 
-      resources :caregiver_favorites, only: [:index, :show]
-      resources :employer_favorites, only: [:index, :show]
+      resources :caregiver_favorites, only: [:create, :destroy]
+      resources :employer_favorites, only: [:create, :destroy]
       resources :caregiver_reviews
       resources :employer_reviews
       resources :candidates
