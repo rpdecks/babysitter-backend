@@ -10,4 +10,13 @@ class Employer < ApplicationRecord
     has_secure_password
 
     validates :email, uniqueness: true
+
+    def self.active
+        Employer.all.select{ |employer| employer.status == 'active' }
+    end
+
+    def rating
+        ratings = self.caregiver_reviews.map { |review| review.rating }
+        user_rating = ratings.reduce(:+) / ratings.length.to_f
+    end
 end
