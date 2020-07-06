@@ -46,7 +46,7 @@ class Api::V1::JobsController < ApplicationController
   private 
 
   def job_params
-    params.require(:job).permit(:title, :job_location, :start_time, :start_date ,:end_time, :end_date, :desc, :total_child_count, :infant_count, :toddler_count, :school_age_count, :pay_rate, :non_smoking, :first_aid_cert, :has_pets)
+    params.require(:job).permit(:title, :job_location, :start_time, :start_date ,:end_time, :end_date, :desc, :total_child_count, :infant_count, :toddler_count, :school_age_count, :pay_rate, :non_smoking, :first_aid_cert, :has_pets, :caregiver_id, :job_id)
   end
 
   def find_job 
