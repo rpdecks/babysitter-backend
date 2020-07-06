@@ -29,8 +29,7 @@ image_urls = [
 'https://babysitters-app.s3.amazonaws.com/17.JPG', 
 'https://babysitters-app.s3.amazonaws.com/18.JPG', 
 'https://babysitters-app.s3.amazonaws.com/19.JPG', 
-'https://babysitters-app.s3.amazonaws.com/21.JPG', 
-'https://babysitters-app.s3.amazonaws.com/22.JPG']
+'https://babysitters-app.s3.amazonaws.com/21.JPG']
 
 puts 'Creating Employers'
 20.times do 
