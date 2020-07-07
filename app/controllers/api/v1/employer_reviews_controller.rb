@@ -1,5 +1,6 @@
 class Api::V1::EmployerReviewsController < ApplicationController
     before_action :authenticate_employer, only: [:create, :update, :destroy]
+    before_action :find_employer_review, only: [:update, :destroy]
 
     def create
         if current_employer
@@ -25,7 +26,7 @@ class Api::V1::EmployerReviewsController < ApplicationController
 
     def destroy
         if @employer_review.destroy
-            render :json => { msg: 'Review was deleted!'}, :status => :ok
+            render :json => { deleted: true, msg: 'Review was deleted!'}, :status => :ok
         else
             render :json => { msg: "Delete failed!"}, :status => :bad_request
         end
@@ -38,7 +39,7 @@ class Api::V1::EmployerReviewsController < ApplicationController
     end
 
     def find_employer_review 
-        @employer_review = EmployerReview.find_by(caregiver_id: params[:caregiver_id])
+        @employer_review = EmployerReview.find_by(id: params[:id])
         if !@employer_review
         render :json => { msg: "Could not find review" }, :status => :bad_request
         else
