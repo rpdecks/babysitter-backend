@@ -1,27 +1,33 @@
 class Api::V1::EmployersController < ApplicationController
-    before_action :authenticate_employer, only: [:get_info]
+    before_action :authenticate_employer, only: [:update, :destroy]
+    before_action :find_employer, only: [:update, :destroy]
 
-    def create
-      @employer = Employer.create(employer_params)
-      token = JWT.encode({ employer_id: @employer.id }, ENV['SUPER_SECRET_KEY'])
-      render :json => { token: token }, :status => :ok
-    end
+  def create
+    @employer = Employer.create(employer_params)
+    token = JWT.encode({ employer_id: @employer.id }, ENV['SUPER_SECRET_KEY'])
+    render :json => { token: token }, :status => :ok
+  end
 
-    def get_info
-      if current_employer
-        render json: current_employer, :include => [:jobs], status: :ok
-      else
-        render :json => { msg: "User not found" }, :status => :bad_request
-      end
+  def update
+    if @employer.update(employer_params)
+      render :json => @employer, :status => :ok
+    else
+      render :json => { msg: "Employer update failed." }, :status => :bad_request
     end
+  end
 
-    private
+  private
 
-    def employer_params
-      params.require(:employer).permit(:first_name, :last_name, :dob, :gender, :phone, :smoker, :has_pets, :bio, :email, :password, :user_type, :address)
+  def employer_params
+    params.require(:employer).permit(:first_name, :last_name, :dob, :gender, :phone, :smoker, :has_pets, :bio, :email, :password, :user_type, :address, :email, :image, :status)
+  end
+
+  def find_employer
+    @employer = Employer.find_by(id: params[:id])
+    if !@employer
+      render :json => { msg: "Could not find employer" }, :status => :bad_request
+    else
+        return @employer
     end
-  
-    def find_employer
-      @employer = Employer.find_by(id: params[:id])
-    end
+  end
 end

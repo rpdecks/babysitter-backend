@@ -1,5 +1,6 @@
 class Api::V1::CaregiverReviewsController < ApplicationController
     before_action :authenticate_caregiver, only: [:create, :update, :destroy]
+    before_action :find_caregiver_review, only: [:update, :destroy]
 
     def create
         if current_caregiver
@@ -25,7 +26,7 @@ class Api::V1::CaregiverReviewsController < ApplicationController
 
     def destroy
         if @caregiver_review.destroy
-            render :json => { msg: 'Review was deleted!'}, :status => :ok
+            render :json => { deleted: true, msg: 'Review was deleted!'}, :status => :ok
         else
             render :json => { msg: "Delete failed!"}, :status => :bad_request
         end
@@ -37,8 +38,8 @@ class Api::V1::CaregiverReviewsController < ApplicationController
         params.require(:caregiver_review).permit(:title, :content, :rating, :id, :employer_id)
     end
 
-    def find_employer_review 
-        @caregiver_review = CaregiverReview.find_by(employer_id: params[:employer_id])
+    def find_caregiver_review 
+        @caregiver_review = CaregiverReview.find_by(id: params[:id])
         if !@caregiver_review
         render :json => { msg: "Could not find review" }, :status => :bad_request
         else
