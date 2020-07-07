@@ -42,9 +42,9 @@ puts 'Creating Caregivers'
 end
 
 puts 'Creating Jobs'
-120.times do
+60.times do
     # to ensure jobs are 1-8 hours long max/min
-    start = Faker::Time.between_dates(from: Date.today, to: Date.today + 30, period: :day) 
+    start = Faker::Time.between_dates(from: Date.today, to: Date.today + 30, period: :all) 
     ending = start + [7200, 14400, 21600, 28800].sample
 
     infants =  [0,1].sample
@@ -57,9 +57,9 @@ puts 'Creating Jobs'
 end
 
 puts 'Creating Jobs w/o caregivers assigned'
-120.times do
+60.times do
     # to ensure jobs are 1-8 hours long max/min
-    start = Faker::Time.between_dates(from: Date.today, to: Date.today + 30, period: :day) 
+    start = Faker::Time.between_dates(from: Date.today, to: Date.today + 30, period: :all) 
     ending = start + [7200, 14400, 21600, 28800].sample
 
     infants =  [0,1].sample
@@ -70,13 +70,13 @@ puts 'Creating Jobs w/o caregivers assigned'
 
     job = Job.create(employer_id: Employer.all.sample.id, start_time: start, end_time: ending, desc: Faker::Lorem.sentence(word_count: 30), job_location: Faker::Address.street_address, total_child_count: total, infant_count: infants, toddler_count: toddlers, school_age_count: school_age, non_smoking: Faker::Boolean.boolean, first_aid_cert: Faker::Boolean.boolean, has_pets: Faker::Boolean.boolean, title: job_title, pay_rate: rand(10..25))
 
-    5.times do 
+    [1,2,3].sample.times do 
         Candidate.create(job_id: job.id, caregiver_id: Caregiver.all.sample.id)
     end
 end
 
 puts 'Creating Caregiver Reviews'
-20.times do
+50.times do
     sitters = Caregiver.all.select { |cg| cg.employers.length > 0}
     cg = sitters.sample
     emp = cg.employers.sample
@@ -85,7 +85,7 @@ puts 'Creating Caregiver Reviews'
 end
 
 puts 'Creating Employer Reviews'
-20.times do
+50.times do
     employers = Employer.all.select { |e| e.caregivers.length > 0}
     emp = employers.sample
     cg = emp.caregivers.sample
