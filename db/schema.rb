@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_04_195855) do
+ActiveRecord::Schema.define(version: 2020_07_07_165740) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -108,8 +108,6 @@ ActiveRecord::Schema.define(version: 2020_07_04_195855) do
     t.bigint "employer_id", null: false
     t.string "status", default: "incomplete"
     t.string "job_location"
-    t.time "start_time"
-    t.time "end_time"
     t.text "desc"
     t.integer "total_child_count"
     t.integer "infant_count"
@@ -123,9 +121,9 @@ ActiveRecord::Schema.define(version: 2020_07_04_195855) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "caregiver_id"
     t.text "title"
-    t.date "start_date"
-    t.date "end_date"
     t.boolean "has_pets"
+    t.datetime "start_time"
+    t.datetime "end_time"
     t.index ["employer_id"], name: "index_jobs_on_employer_id"
   end
 
