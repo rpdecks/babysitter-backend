@@ -26,7 +26,7 @@ class Employer < ApplicationRecord
     end
 
     def job_count
-        completed_jobs = self.jobs.select{ |job| job.status == "completed"}
+        completed_jobs = self.jobs.select{ |job| job.status == "complete"}
         return completed_jobs.length
     end
 
