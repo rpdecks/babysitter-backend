@@ -1,5 +1,4 @@
 require 'faker'
-require 'pry'
 
 CaregiverFavorite.destroy_all
 EmployerFavorite.destroy_all
