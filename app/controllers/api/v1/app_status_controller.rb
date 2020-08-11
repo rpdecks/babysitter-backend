@@ -29,11 +29,4 @@ class Api::V1::AppStatusController < ApplicationController
             }
         end
     end
-
-    def default_serializer_options
-        {
-          serializer: nil
-        }
-    end
-
 end
