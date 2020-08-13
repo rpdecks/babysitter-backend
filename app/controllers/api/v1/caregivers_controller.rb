@@ -3,9 +3,13 @@ class Api::V1::CaregiversController < ApplicationController
     before_action :find_caregiver, only: [:update, :destroy]
 
   def create
-      @caregiver = Caregiver.create(caregiver_params)
+    @caregiver = Caregiver.create(caregiver_params)
+    if @caregiver.persisted?
       token = JWT.encode({ caregiver_id: @caregiver.id }, ENV['SUPER_SECRET_KEY'])
       render :json => { token: token }, :status => :ok
+    else
+      render :json => { msg: @caregiver.errors.full_messages.join(', ') }
+    end
   end
 
   def update

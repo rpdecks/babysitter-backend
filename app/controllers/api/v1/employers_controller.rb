@@ -4,8 +4,12 @@ class Api::V1::EmployersController < ApplicationController
 
   def create
     @employer = Employer.create(employer_params)
-    token = JWT.encode({ employer_id: @employer.id }, ENV['SUPER_SECRET_KEY'])
-    render :json => { token: token }, :status => :ok
+    if @employer.persisted?
+      token = JWT.encode({ employer_id: @employer.id }, ENV['SUPER_SECRET_KEY'])
+      render :json => { token: token }, :status => :ok
+    else
+      render :json => { msg: @employer.errors.full_messages.join(', ')}
+    end
   end
 
   def update
